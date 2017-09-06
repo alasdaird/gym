@@ -44,15 +44,15 @@ class ChristmasTreeEnv(gym.Env):
         # get current state
         state = self.state
 
-        # define new amount of irrigation
-        self._irrigate(action)
+        # define new amount of irrigation - action
+        self.irrigation = action
 
         # CHANGE these functions to make the system non-linear <<<
         self.funcHeightIrr = self.irrigation / 4
         self.funcBushyIrr = self.irrigation
         # weekly observation
-        self.height_growth = (self.baseRateH + np.random.random(1)*4) * self.funcHeightIrr
-        self.bushy_growth = (self.baseRateB + np.random.random(1)*4) * self.funcBushyIrr
+        self.height_growth = (self.baseRateH + np.random.random(1)*0.01) * self.funcHeightIrr
+        self.bushy_growth = (self.baseRateB + np.random.random(1)*0.01) * self.funcBushyIrr
 
         # cumulative growth
         #self.lastWeekHeight = lastWeekHeight + height_growth # DELETE IF WE DO NOT NEED THIS?
@@ -64,8 +64,12 @@ class ChristmasTreeEnv(gym.Env):
         self.tree_ratio = self.height / self.bushy
         self.target_height = self.bushy * self.golden_ratio # DELETE IF WE DO NOT NEED THIS?
 
+        # update state
+        # state is self.height & self.bushy
+
+
         # reward
-        self.reward = self.reward + self._get_reward()
+        self.reward = self._get_reward()
 
         # end episode if done is true
         if self.reward >= 52:
@@ -73,7 +77,8 @@ class ChristmasTreeEnv(gym.Env):
         else:
             done = False
 
-        return self.tree_ratio, self.reward, done
+        return [self.height, self.bushy , self.tree_ratio], self.reward, done, {}
+
 
     def _irrigate(self, action):
 
