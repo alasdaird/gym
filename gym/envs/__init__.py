@@ -51,6 +51,11 @@ register(
 # ----------------------------------------
 
 register(
+   	id='Christmastree-v0',
+   	entry_point='gym.envs.classic_control:ChristmasTreeEnv',
+)
+
+register(
     id='CartPole-v0',
     entry_point='gym.envs.classic_control:CartPoleEnv',
     max_episode_steps=200,

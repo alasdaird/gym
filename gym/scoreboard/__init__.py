@@ -81,6 +81,16 @@ add_group(
 # classic control
 
 add_task(
+    id='Christmastree-v0',
+   	summary="Optimise_tree_shape",
+   	group='classic_control',
+   	contributor='alasdaird',
+    description="""\
+Goal of the christmas tree environment is to vary the irrigation of a tree over a year to balance the height of the tree to its bushyness (width) roughly inline with the golden ratio.
+""",
+)
+
+add_task(
     id='CartPole-v0',
     group='classic_control',
     summary="Balance a pole on a cart (for a short time).",
