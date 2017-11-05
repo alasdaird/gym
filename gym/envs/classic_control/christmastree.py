@@ -4,8 +4,6 @@ ChristmasTree
 
 import logging
 import gym
-from gym import error, spaces, utils
-from gym.utils import seeding
 from gym import spaces
 from gym.utils import seeding
 import numpy as np
@@ -54,19 +52,16 @@ class ChristmasTreeEnv(gym.Env):
         self.height_growth = (self.baseRateH + np.random.random(1)*0.01) * self.funcHeightIrr
         self.bushy_growth = (self.baseRateB + np.random.random(1)*0.01) * self.funcBushyIrr
 
+        # update state
         # cumulative growth
-        #self.lastWeekHeight = lastWeekHeight + height_growth # DELETE IF WE DO NOT NEED THIS?
-        #self.lastWeekBushy = lastWeekBushy + lastWeekBushy # DELETE IF WE DO NOT NEED THIS?
-        self.height = self.height  + self.height_growth # REPLACED lastWeekHeight with height
-        self.bushy = self.bushy + self.bushy_growth # REPLACED lastWeekBushy with bushy
+        self.height = self.height + self.height_growth
+        self.bushy = self.bushy + self.bushy_growth
 
         # metrics
         self.tree_ratio = self.height / self.bushy
         self.target_height = self.bushy * self.golden_ratio # DELETE IF WE DO NOT NEED THIS?
 
-        # update state
         # state is self.height & self.bushy
-
 
         # reward
         self.reward = self._get_reward()
@@ -79,13 +74,6 @@ class ChristmasTreeEnv(gym.Env):
 
         return [self.height, self.bushy , self.tree_ratio], self.reward, done, {}
 
-
-    def _irrigate(self, action):
-
-        # DO WE NEED A PARAMETER TO CATER FOR FIRST VALUE OF irrigation?
-        # 'weekly' action (related to Policy) WHAT IS THE FREQUENCY OF THIS? EACH EPISODE?
-        # NEEDS INPUT!
-        return self.irrigation #= action # value of the set {0,1,2,...8}
 
     def _get_reward(self):
 
